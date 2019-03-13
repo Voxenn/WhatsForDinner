@@ -1,0 +1,69 @@
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+body {
+  /*background-image: url("images/fork_background.jpg");
+  /*Full height
+  height: 100%;
+  width: 100%;
+  /*Center and scale the image
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;*/
+}
+
+form {
+  text-align: center;
+}
+input, label {
+  display: block;
+  margin: auto;
+}
+
+label {
+  color: tomato;
+  font-size: 6em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 5px;
+  text-align: center;
+  color: tomato;
+}
+
+.hidden {
+  display: none;
+}
+
+#bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -100;
+}
+#map {
+  height: 100%;
+}
+
+#meal-error-message {
+  background-image: url("images/oops_potato.jpg");
+  /*Full height*/
+  height: 100%;
+  width: 100%;
+  /*Center and scale the image */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+}

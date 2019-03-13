@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA=Compatible" content="id=edge">
+    <title>What's For Dinner?</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <video autoplay muted loop id="bg-video">
+      <source src="images/bg_video.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <form>
+        <label id="dinner-label" for="dinner-item"></label>
+        <input id="dinner-item" type="text" required></input>
+        <button type="submit">Let's Eat!</button>
+      </form>
+      <p id="error-message" class="error-message"></p>
+      <p id="meal-error-message" class="error-message hidden"></p>
+      <section id="dinner-results" class="results hidden">
+        <h2>Delicious Options</h2>
+        <ul id="results-list">
+        </ul>
+      </section>
+    </div>
+    <div id="map" class="map hidden"></div>
+    <script src="index.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdyGYuJv2VURydSgj5bj-Dhi3QQrA3fDo&callback=initMap">
+    </script>
+  </body>
+</html>
