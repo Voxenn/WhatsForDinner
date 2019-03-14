@@ -40,14 +40,27 @@ function displayResults(responseJson){
   } else {
     console.log("Successful fetch, now building LI");
     for(let i = 0; i < responseJson.meals.length; i++) {
-      $("#results-list").append(
-        `<li><h3>${responseJson.meals[i].strMeal}</h3>
+      //We hide the dynamically built HTML originally
+      $(`<li><h3>${responseJson.meals[i].strMeal}</h3>
         <button type="button" class="instruction-toggle">${responseJson.meals[i].strMeal} Instructions</button>
-        <p class="instruction">${responseJson.meals[i].strInstructions}<p>
-
+        <p class="instruction">${responseJson.meals[i].strInstructions}</p>
+        <button type="button" class="ingredients-toggle">Ingredient List</button>
+        <p class="ingredients">
+          <ul>
+          </ul>
+        </p>
         </li>
-        `
-      )};
+        `)
+        //Since we built the HTML first and then appended it, the fadeIn will now target the HTML
+        .hide().appendTo("#results-list").fadeIn();
+        let strIngredient = "strIngredient"
+        for(strIngredient in responseJson.meals[i]){
+          if(responseJson.meals[i].hasOwnProperty(strIngredient)){
+            $("p").closest("ul").find(".ingredients").append
+            (`<li><h4>${strIngredient}</h4></li>`
+            )}
+        }
+      };
       $('p').hide();
   }
   $("#dinner-results").removeClass('hidden');
