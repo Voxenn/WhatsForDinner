@@ -42,9 +42,9 @@ function displayResults(responseJson){
     for(let i = 0; i < responseJson.meals.length; i++) {
       //We hide the dynamically built HTML originally
       $(`<li><h3>${responseJson.meals[i].strMeal}</h3>
-        <button type="button" class="instruction-toggle">${responseJson.meals[i].strMeal} Instructions</button>
+        <button type="button" class="button instruction-toggle">${responseJson.meals[i].strMeal} Instructions</button>
         <p class="instruction">${responseJson.meals[i].strInstructions}</p>
-        <button type="button" class="ingredients-toggle">Ingredient List</button>
+        <button type="button" class="button ingredients-toggle">Ingredient List</button>
         <p class="ingredients">
           <ul id="ingredients${i + 1} class="ingredients">
           </ul>

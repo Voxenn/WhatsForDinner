@@ -40,6 +40,21 @@ li {
   color: tomato;
 }
 
+.button {
+  border-radius: 4px;
+  border: none;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.instruction {
+  background-color: seashell;
+}
 .hidden {
   display: none;
 }
@@ -67,3 +82,50 @@ li {
   background-size: cover;
   position: fixed;
 }
+
+@media all and (max-width: 519px) and (min-width: 300px) {
+  body {
+    background-image: url("images/ingred.jpg");
+    height: 100%;
+    width: 100%;
+    /*Center and scale the image*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+  }
+  video {
+    display: none;
+  }
+}
+@media all and (max-width: 699px) and (min-width: 520px) {
+  body {
+    background-image: url("images/ingred.jpg");
+    height: 100%;
+    width: 100%;
+    /*Center and scale the image*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+  }
+  video {
+    display: none;
+  }
+}
+@media all and (max-width: 1000px) and (min-width: 700px) {
+  body {
+    background-image: url("images/ingred.jpg");
+    height: 100%;
+    width: 100%;
+    /*Center and scale the image*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+  }
+  video {
+    display: none;
+  }
+}
+@media all and (min-width: 1001px) {}
