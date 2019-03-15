@@ -46,29 +46,43 @@ function displayResults(responseJson){
         <p class="instruction">${responseJson.meals[i].strInstructions}</p>
         <button type="button" class="ingredients-toggle">Ingredient List</button>
         <p class="ingredients">
-          <ul>
+          <ul id="ingredients${i + 1} class="ingredients">
           </ul>
         </p>
         </li>
         `)
         //Since we built the HTML first and then appended it, the fadeIn will now target the HTML
         .hide().appendTo("#results-list").fadeIn();
-        let strIngredient = "strIngredient"
-        for(strIngredient in responseJson.meals[i]){
-          if(responseJson.meals[i].hasOwnProperty(strIngredient)){
-            $("p").closest("ul").find(".ingredients").append
-            (`<li><h4>${strIngredient}</h4></li>`
+        let jsonData = responseJson.meals[i];
+        console.log(jsonData);
+        for(let j = 1; j <= 20; j++){
+          let key = "strIngredient" + j;
+          let key2 = "strMeasure" + j;
+          if(jsonData.hasOwnProperty(key)){
+            if (jsonData[key] !== ""){
+            $(`#ingredients${i + 1}`).append
+            (`<li><h4>${jsonData[key2]} - ${jsonData[key]}</h4></li>`
             )}
+          }
         }
       };
       $('p').hide();
+      $('.ingredients').hide();
   }
   $("#dinner-results").removeClass('hidden');
 };
 
+//Function to toggle instructions paragraph
 $(function() {
   $('ul').on('click', '.instruction-toggle', function(event) {
     $(this).closest("li").find(".instruction").fadeToggle();
+  })
+});
+
+//Function to toggle ingredients list
+$(function() {
+  $('ul').on('click', '.ingredients-toggle', function(event) {
+    $(this).closest("li").find(".ingredients").fadeToggle();
   })
 });
 
@@ -78,8 +92,6 @@ function getMeals(query){
   };
   const queryString = formatQueryParams(params);
   const url = `${food_url}?${queryString}`;
-  console.log(url);
-
   fetch(url)
   .then( response => {
     if(response.ok) {
