@@ -35,7 +35,6 @@ ul {
 }
 
 li {
-  padding: 5px;
   text-align: center;
   color: tomato;
 }
@@ -52,9 +51,22 @@ li {
   background-color: #008CBA;
   color: white;
 }
+
+.ingredient {
+  background-color: seashell;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
 .instruction {
   background-color: seashell;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50%;
+  border-radius: 5px;
 }
+
 .hidden {
   display: none;
 }
@@ -90,13 +102,12 @@ li {
     width: 100%;
     /*Center and scale the image*/
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
   }
   video {
     display: none;
   }
+
 }
 @media all and (max-width: 699px) and (min-width: 520px) {
   body {
@@ -105,13 +116,12 @@ li {
     width: 100%;
     /*Center and scale the image*/
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
   }
   video {
     display: none;
   }
+
 }
 @media all and (max-width: 1000px) and (min-width: 700px) {
   body {
@@ -120,9 +130,7 @@ li {
     width: 100%;
     /*Center and scale the image*/
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
   }
   video {
     display: none;

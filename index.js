@@ -43,12 +43,14 @@ function displayResults(responseJson){
       //We hide the dynamically built HTML originally
       $(`<li><h3>${responseJson.meals[i].strMeal}</h3>
         <button type="button" class="button instruction-toggle">${responseJson.meals[i].strMeal} Instructions</button>
-        <p class="instruction">${responseJson.meals[i].strInstructions}</p>
         <button type="button" class="button ingredients-toggle">Ingredient List</button>
-        <p class="ingredients">
-          <ul id="ingredients${i + 1} class="ingredients">
-          </ul>
-        </p>
+        <section class="meal-prep">
+          <p class="instruction">${responseJson.meals[i].strInstructions}</p>
+          <p class="ingredients">
+            <ul id="ingredients${i + 1}" class="ingredients-list">
+            </ul>
+            </p>
+        </section>
         </li>
         `)
         //Since we built the HTML first and then appended it, the fadeIn will now target the HTML
@@ -61,13 +63,13 @@ function displayResults(responseJson){
           if(jsonData.hasOwnProperty(key)){
             if (jsonData[key] !== ""){
             $(`#ingredients${i + 1}`).append
-            (`<li><h4>${jsonData[key2]} - ${jsonData[key]}</h4></li>`
+            (`<li class="ingredient"><h4>${jsonData[key2]} - ${jsonData[key]}</h4></li>`
             )}
           }
         }
       };
       $('p').hide();
-      $('.ingredients').hide();
+      $('.ingredients-list').hide();
   }
   $("#dinner-results").removeClass('hidden');
 };
@@ -83,6 +85,7 @@ $(function() {
 $(function() {
   $('ul').on('click', '.ingredients-toggle', function(event) {
     $(this).closest("li").find(".ingredients").fadeToggle();
+    console.log($(this).closest("li").find(".ingredients-list").fadeToggle());
   })
 });
 
