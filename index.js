@@ -1,44 +1,112 @@
 'use strict';
 const food_url = 'https://www.themealdb.com/api/json/v1/1/search.php';
-
 const api_key = 'AIzaSyAdyGYuJv2VURydSgj5bj-Dhi3QQrA3fDo';
 let i = 0;
-let map;
 let questionText = "What's cookin'?";
 let speed = 150;
+var map;
+var service;
+var infowindow;
 
 //Function to display label text as if it were being typed
 function typeWriter() {
   if (i < questionText.length) {
-    document.getElementById('dinner-label').innerHTML += questionText.charAt(i);
+    document.getElementById('cooking-title').innerHTML += questionText.charAt(i);
     i++;
     setTimeout(typeWriter, speed);
   }
 }
 
 //Function to initialize the map. This will be hidden initially
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 29.773823, lng: -95.422},
-    zoom: 15
+function initMap(query) {
+  $('.map').fadeIn();
+  //Set location
+  var houston = new google.maps.LatLng(29.773823, -95.422);
+
+  //Create a new map
+  map = new google.maps.Map(
+    document.getElementById('map'), {center: houston, zoom: 15});
+  infowindow = new google.maps.InfoWindow();
+  var request = {
+    location: houston,
+    radius: '500',
+    query: query
+  };
+  function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 6
+          });
+          infoWindow = new google.maps.InfoWindow;
+
+          // Try HTML5 geolocation.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('Location found.');
+              infoWindow.open(map);
+              map.setCenter(pos);
+            }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);
+        }
+  //Perform a text search to locate places by the user's text
+  service = new google.maps.places.PlacesService(map);
+  service.textSearch(request, function(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
+      map.setCenter(results[0].geometry.location);
+    }
   });
 }
 
+//Create markers on the map relevant to the user's text search
+function createMarker(place) {
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+//Function to format parameters to API call
 function formatQueryParams(params){
   const queryItems = Object.keys(params)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
     return queryItems.join('&');
 };
 
+//Display results dynamically in this function.
 function displayResults(responseJson){
   $("#meal-error-message").empty();
-  $("#meal-error-message").addClass('hidden');
+  $("#meal-error-message").hide()
   $("#results-list").empty();
+  $(".map").hide();
   if(responseJson.meals === null){
-      $("#meal-error-message").text(`Oops! It looks like that meal was a little too exotic.`);
-      $("#meal-error-message").removeClass('hidden');
+      $("#meal-error-message").text(`Oops! Try refining your search.`);
+      $("#meal-error-message").fadeToggle();
   } else {
-    console.log("Successful fetch, now building LI");
     for(let i = 0; i < responseJson.meals.length; i++) {
       //We hide the dynamically built HTML originally
       $(`<li><h3>${responseJson.meals[i].strMeal}</h3>
@@ -56,7 +124,6 @@ function displayResults(responseJson){
         //Since we built the HTML first and then appended it, the fadeIn will now target the HTML
         .hide().appendTo("#results-list").fadeIn();
         let jsonData = responseJson.meals[i];
-        console.log(jsonData);
         for(let j = 1; j <= 20; j++){
           let key = "strIngredient" + j;
           let key2 = "strMeasure" + j;
@@ -85,7 +152,7 @@ $(function() {
 $(function() {
   $('ul').on('click', '.ingredients-toggle', function(event) {
     $(this).closest("li").find(".ingredients").fadeToggle();
-    console.log($(this).closest("li").find(".ingredients-list").fadeToggle());
+    $(this).closest("li").find(".ingredients-list").fadeToggle();
   })
 });
 
@@ -109,11 +176,16 @@ function getMeals(query){
 }
 function watchForm() {
   typeWriter();
-  $('form').submit(event => {
-    event.preventDefault();
+  $("#search-form button").click(function(event) {
+    event.preventDefault()
     const query = $("#dinner-item").val();
-    getMeals(query);
-  })
+    if($(this).attr("value")=="recipe-search"){
+      getMeals(query);
+    }
+    if($(this).attr("value")=="restaurant-search"){
+      initMap(query);
+    }
+  });
 };
 
 $(document).ready(watchForm);

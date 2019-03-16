@@ -12,23 +12,30 @@
     <video autoplay muted loop id="bg-video">
       <source src="images/bg_video.mp4" type="video/mp4">
     </video>
+    <h1 id="cooking-title"></h1>
     <div class="container">
-      <form>
-        <label id="dinner-label" for="dinner-item"></label>
+      <form id="search-form">
+        <!--<label id="dinner-label" for="dinner-item"></label>-->
         <input id="dinner-item" type="text" required></input>
-        <button type="submit" class="button">Let's Eat!</button>
+        <div>
+          <button type="submit" class="button" value="recipe-search">Let's eat!</button>
+          <label id="restaurant-label" for"restaurant-item"></label>
+          <button type="submit" class="button" value="restaurant-search">Let's eat out!</button>
+        </div>
       </form>
-      <p id="error-message" class="error-message"></p>
-      <p id="meal-error-message" class="error-message hidden"></p>
+      <section id="error-messages">
+        <p id="error-message" class="error-message"></p>
+        <p id="meal-error-message" class="error-message hidden"></p>
+      </section>
       <section id="dinner-results" class="results hidden">
         <ul id="results-list">
         </ul>
       </section>
     </div>
-    <div id="map" class="map hidden"></div>
+    <div id="map" class="map"></div>
     <script src="index.js"></script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdyGYuJv2VURydSgj5bj-Dhi3QQrA3fDo&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdyGYuJv2VURydSgj5bj-Dhi3QQrA3fDo&libraries=places">
     </script>
   </body>
 </html>
